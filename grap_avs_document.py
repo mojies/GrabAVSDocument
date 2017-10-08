@@ -1,15 +1,8 @@
+import os
+import re
 import urllib.request as ur
 from lxml import etree
 import html2text as h2m
-import re
-
-
-testSite="https://developer.amazon.com/docs/alexa-voice-service/api-overview.html"
-# testSite="https://developer.amazon.com/docs/alexa-voice-service/speechrecognizer.html"
-# testSite="https://developer.amazon.com/docs/alexa-voice-service/complicated/speechrecognizer.html"
-# SITE="http://www.baidu.com"
-
-
 
 
 def isAVSLink( url ):
@@ -70,6 +63,7 @@ def turnHtml2MarkdownAndSave2File( htmlStrUtf8, fileName ):
     if not markdownContent :
         print( "html trun markdown failed" )
         return False
+    fileName = "docs/" + fileName
     f = open( fileName, 'w' )
     if not f :
         print( "file {} cant open" .format( fileName ) )
@@ -135,8 +129,20 @@ def grapAVSwebsite( url, grabedList ):
     return grabedList
 
 
+
+saveDir="docs"
+testSite="https://developer.amazon.com/docs/alexa-voice-service/api-overview.html"
+# testSite="https://developer.amazon.com/docs/alexa-voice-service/speechrecognizer.html"
+# testSite="https://developer.amazon.com/docs/alexa-voice-service/complicated/speechrecognizer.html"
+# SITE="http://www.baidu.com"
+
+
+os.makedirs( saveDir, exist_ok=True)
+
+
 grabedList = grapAVSwebsite( testSite, grabedList=[] )
 # print( getFileNameFromUrl( testSite ) )
+
 exit()
 
 '''
